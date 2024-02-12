@@ -1,0 +1,152 @@
+<html>
+
+<head>
+  <title>Thermometer Lab</title>
+</head>
+
+<body>
+  <h1>Thermometer Lab</h1>
+  <div>
+    <svg version="1.1" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg" height="50%" width="75%">
+      <style>
+        #glass {
+          fill: #ffffff;
+          stroke: #cccccc;
+          stroke-width: 3;
+        }
+
+        #container {
+          fill: #ffffff;
+          stroke: #000000;
+          stroke-width: 5;
+        }
+        #fill {
+          stroke: #000000;
+          stroke-width: 5;
+        }
+      </style>
+
+      <rect id="container" x="10" y="10" width="100" height="210" rx="15" />
+
+      <g id="glass">
+        <rect x="45" y="20" width="30" height="160" rx="15" />
+        <ellipse cx="60" cy="180" rx="30" ry="30" />
+        <rect x="46.5" y="22" width="27" height="165" rx="15" stroke="none" />
+      </g>
+
+      <g id="fill">
+        <rect id="heighttracker" x="52" y="25" width="15" height="160" rx="7" fill="red" stroke="none"/>
+        <ellipse id="orbbottom" cx="60" cy="180" rx="20" ry="20" fill="red" stroke="none"/>
+      </g>
+
+      <!-- ARC -->
+      <path d=" M 68 191 A 14 14 54 0 1 50 170" stroke-width="3" fill="none" stroke="white"/>
+      <path d=" M 53 168 A 14 14 54 0 1 61 166" stroke-width="3" fill="none" stroke="white"/>
+      
+
+      <!-- The Tickmarks-->
+      <!--
+      <rect x="80" y="25" width="10" height="4" fill="black"/>
+      <rect x="80" y="37.5" width="10" height="4" fill="black"/>
+      <rect x="80" y="50" width="10" height="4" fill="black"/>
+      <rect x="80" y="62.5" width="10" height="4" fill="black"/>
+      <rect x="80" y="75" width="10" height="4" fill="black"/>
+      <rect x="80" y="87.5" width="10" height="4" fill="black"/>
+      <rect x="80" y="100" width="10" height="4" fill="black"/>
+      <rect x="80" y="112.5" width="10" height="4" fill="black"/>
+      <rect x="80" y="125" width="10" height="4" fill="black"/>
+      <rect x="80" y="150" width="10" height="4" fill="black"/>
+      -->
+      <rect x="80" y="25" width="25" height="4" fill="black"/>
+      <rect x="80" y="39" width="10" height="4" fill="black"/>
+      <rect x="80" y="53" width="20" height="4" fill="black"/>
+      <rect x="80" y="67" width="10" height="4" fill="black"/>
+      <rect x="80" y="81" width="20" height="4" fill="black"/>
+      <rect x="80" y="95" width="10" height="4" fill="black"/>
+      <rect x="80" y="109" width="20" height="4" fill="black"/>
+      <rect x="80" y="123" width="10" height="4" fill="black"/>
+      <rect x="80" y="137" width="20" height="4" fill="black"/>
+      <rect x="80" y="151" width="25" height="4" fill="black"/>
+
+      <text class="label" x="138" y="30" text-anchor="middle" id="num1">212.00</text>
+      <text class="label" x="138" y="60" text-anchor="middle" id="num2">164.89</text>
+      <text class="label" x="138" y="87" text-anchor="middle" id="num3">117.78</text>
+      <text class="label" x="138" y="117" text-anchor="middle" id="num4">70.67</text>
+      <text class="label" x="138" y="145" text-anchor="middle" id="num5">23.56</text>
+      <text class="label" x="138" y="160" text-anchor="middle" id="num6">0.00</text>
+
+    </svg>
+
+    <div class="rangeslider"> 
+      <input type="range" min="1" max="100" value="100"
+                      class="myslider" id="sliderRange"> 
+      <p>Value: <span id="demo"></span></p> 
+    </div> 
+
+  </div>
+
+  <fieldset>
+    <legend>Select a unit of measure:</legend>
+  
+    <div>
+      <input type="radio" id="far" name="units" value="far" onchange="change_temp(cel)" checked />
+      <label for="far">Fahrenheit (F°)</label>
+    </div>
+  
+    <div>
+      <input type="radio" id="cel" name="units" value="cel" onchange="change_temp(far)"/>
+      <label for="cel">Celcius (C°)</label>
+    </div>
+  </fieldset>
+  
+
+  <script> 
+    var rangeslider = document.getElementById("sliderRange"); 
+    var output = document.getElementById("demo");
+    output.innerHTML = rangeslider.value; 
+      
+    rangeslider.oninput = function() { 
+      output.innerHTML = this.value;
+      var newvalue = (100 - parseInt(this.value))*1.3
+      console.log(newvalue)
+      document.getElementById('heighttracker').setAttribute("y", parseInt(newvalue) + 25);
+      document.getElementById('heighttracker').setAttribute("height", 160 - parseInt(newvalue));
+
+      if (this.value >= 1 && this.value < 33) {
+        document.getElementById('heighttracker').setAttribute("fill", "blue");
+        document.getElementById('orbbottom').setAttribute("fill", "blue");
+      } else if (this.value >= 33 && this.value < 66) {
+        document.getElementById('heighttracker').setAttribute("fill", "orange");
+        document.getElementById('orbbottom').setAttribute("fill", "orange");
+      } else if (this.value >= 66 && this.value < 100) {
+        document.getElementById('heighttracker').setAttribute("fill", "red");
+        document.getElementById('orbbottom').setAttribute("fill", "red");
+      }
+
+    } 
+
+    function change_temp(src) {
+      if (src == far) {
+        console.log("FAR")
+        document.querySelector('text#num1').textContent='100.00'
+        document.querySelector('text#num2').textContent='73.83'   
+        document.querySelector('text#num3').textContent='47.65'   
+        document.querySelector('text#num4').textContent='21.48'   
+        document.querySelector('text#num5').textContent='-4.69'   
+        document.querySelector('text#num6').textContent='-17.77'      
+      }
+      if (src == cel) {
+        console.log("CEL")
+        document.querySelector('text#num1').textContent='212.00'
+        document.querySelector('text#num2').textContent='164.89'   
+        document.querySelector('text#num3').textContent='117.78'   
+        document.querySelector('text#num4').textContent='70.67'   
+        document.querySelector('text#num5').textContent='23.56'   
+        document.querySelector('text#num6').textContent='0.00'          
+      }
+    }
+
+    </script> 
+</body>
+
+</html>
